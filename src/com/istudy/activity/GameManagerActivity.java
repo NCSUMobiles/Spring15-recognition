@@ -8,13 +8,16 @@ import com.istudy.fragment.ProgressBarFragment;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class GameManagerActivity extends FragmentActivity implements ImageFragment.OnItemClickListener{
 
@@ -28,6 +31,10 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	private int max;
 	private static int counter = 0;
 	private int step;	
+	private boolean option_clicked;
+	private LinearLayout parentLayout;
+	private ImageView rightOrWrong;
+	private ImageView iv;
 		
 	
 
@@ -97,6 +104,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 		//t = new Timer();
 		i_time_left = 10;
 		i_score = 10;
+		option_clicked = false;
 		//counter++;
 	}
 	
@@ -155,21 +163,31 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 
 	@Override
 	public void onOptionItemClicked(final View v, final String id, final String correctOption, final View correctView) {
-		handler.removeCallbacks(runnable);
-		v.setBackgroundResource(R.drawable.option_selected);
-		//Toast.makeText(GameManagerActivity.this, "Id: "+id, Toast.LENGTH_SHORT).show();
-		delayHandler.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				if(id.compareTo(correctOption) == 0){
-					i_total_score += i_score;															
-				}else{
-					v.setBackgroundResource(R.drawable.option_wrong);										
+		if (option_clicked == false) {
+			handler.removeCallbacks(runnable);
+			option_clicked = true;
+			v.setBackgroundResource(R.drawable.option_selected);
+			iv = (ImageView)v;
+			delayHandler.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					if(id.compareTo(correctOption) == 0){
+						i_total_score += i_score;
+						v.setBackgroundColor(Color.parseColor("#28ce00"));
+						iv.setImageResource (R.drawable.check);
+						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+						mp.start();
+					}else{
+						v.setBackgroundResource(R.drawable.option_wrong);
+						iv.setImageResource (R.drawable.wrong);
+						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+						mp.start();
+					}
+					timeout_false();
 				}
-				timeout_false();
-			}
-		}, 1000);					
+			}, 1000);
+		}
 	}
 	
 	private void timeout_false(){

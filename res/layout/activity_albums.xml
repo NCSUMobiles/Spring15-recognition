@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="false"
         android:layout_alignParentTop="false"
-        android:textAlignment="textStart"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="#F5E6C0"
         android:text="@string/albumchooser"

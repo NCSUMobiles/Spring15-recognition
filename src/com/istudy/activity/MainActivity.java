@@ -1,6 +1,7 @@
 package com.istudy.activity;
 
 import com.example.istudy.R;
+import com.istudy.bean.Albums;
 import com.istudy.dao.GamePlayDataSource;
 import com.istudy.dataset.DataSet;
 import com.istudy.helper.ActivityHelper;
@@ -8,12 +9,16 @@ import com.istudy.helper.Utils;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -29,6 +34,7 @@ public class MainActivity extends Activity {
 	private String next_theme;
 	private int location;
 	private ImageView imgRepresent;
+	private TextView albumTitle;
 	private LinearLayout trendsView;
 	private ImageView albums;
 	private ImageView play_game;
@@ -44,6 +50,7 @@ public class MainActivity extends Activity {
 		albums = (ImageView) findViewById(R.id.albums_view);
 		play_game = (ImageView) findViewById(R.id.play_game);
 		imgRepresent = (ImageView) findViewById(R.id.img_represent);
+		albumTitle = (TextView) findViewById(R.id.album_title);
 		trendsView = (LinearLayout) findViewById(R.id.trends_view);
 		
 		datasource = new GamePlayDataSource(this);
@@ -79,6 +86,8 @@ public class MainActivity extends Activity {
 		datasource.open();
 		super.onResume();
 		next_theme = DataSet.themeIdArray[location];
+		String album_title = DataSet.themeTitleArray[location];
+		albumTitle.setText(album_title, TextView.BufferType.NORMAL);
 		imgRepresent.setImageResource(Utils.getResId(next_theme+"_represent", "drawable"));
 		trendsView.removeAllViews();
 		for(int i=0;i<DataSet.trendArray.length;i++){
@@ -171,14 +180,15 @@ public class MainActivity extends Activity {
 	
 	private View createTrendItem(int resId, final String tag){
 		LinearLayout layout = new LinearLayout(MainActivity.this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,230);
 		params.setMargins(0, 0, 10, 0);
+		layout.setPadding(5, 5, 5, 60);
+		layout.setBackgroundColor(Color.parseColor("#f6921e"));
 		layout.setLayoutParams(params);
 		
-		
 		ImageView imageView = new ImageView(getApplicationContext());
-		imageView.setLayoutParams(new LayoutParams(125,125));
-		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		imageView.setImageResource(resId);
 		
 		imageView.setTag(tag);
@@ -188,17 +198,46 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				location = Utils.indexForAlbum(tag);
-				Intent intent = new Intent(MainActivity.this, GameManagerActivity.class);
-				Log.d("MainActivity","location: "+location);
-				intent.putExtra("location", location);
-				intent.putExtra("step", 0);
-				startActivityForResult(intent, GAME_REQUEST_CODE);
+				openAlbumDialog(v, tag);
 			}
 		});
 		
 		layout.addView(imageView);
 		
 		return layout;
+	}
+	
+	protected void openAlbumDialog(View view, String tag) {
+
+	//builds modal
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+		alertDialogBuilder.setTitle(DataSet.themeTitleArray[location]);
+		Albums al = datasource.getGamePlayRecord(location);
+		int hs = al.getHighscore();
+		alertDialogBuilder.setMessage("High Score: " + hs);
+		alertDialogBuilder.setPositiveButton(R.string.play, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int id) {
+				Intent intent = new Intent(MainActivity.this, GameManagerActivity.class);
+				intent.putExtra("location", location);
+				intent.putExtra("step", 0);
+				
+				startActivityForResult(intent, GAME_REQUEST_CODE);
+			}
+		});
+		
+		alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+	    }
+
+	    });
+
+
+	AlertDialog dialog = alertDialogBuilder.create();
+
+	dialog.show();
+
 	}
 
 	@Override

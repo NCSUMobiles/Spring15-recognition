@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gameManagerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/recognize_2015_bg"
     android:orientation="vertical"
     android:paddingBottom="@dimen/game_vertical_margin"
     android:paddingLeft="@dimen/game_horizontal_margin"
@@ -12,7 +14,7 @@
         android:id="@+id/main_image"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:background="#383641"
+        android:background="#8bc53f"
         android:contentDescription="@string/desc"
         android:paddingBottom="@dimen/game_padding"
         android:paddingTop="@dimen/game_padding"
