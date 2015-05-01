@@ -1,5 +1,7 @@
 package com.istudy.activity;
 
+import java.util.Random;
+
 import com.example.istudy.R;
 import com.istudy.bean.Albums;
 import com.istudy.dao.GamePlayDataSource;
@@ -13,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -38,6 +41,7 @@ public class MainActivity extends Activity {
 	private LinearLayout trendsView;
 	private ImageView albums;
 	private ImageView play_game;
+	private TextView welcomeText;
 	
 	private GamePlayDataSource datasource;
 	@Override
@@ -52,6 +56,8 @@ public class MainActivity extends Activity {
 		imgRepresent = (ImageView) findViewById(R.id.img_represent);
 		albumTitle = (TextView) findViewById(R.id.album_title);
 		trendsView = (LinearLayout) findViewById(R.id.trends_view);
+		welcomeText = (TextView) findViewById(R.id.welcome_text);
+		
 		
 		datasource = new GamePlayDataSource(this);
 	    datasource.open();
@@ -85,13 +91,19 @@ public class MainActivity extends Activity {
 	protected void onResume(){
 		datasource.open();
 		super.onResume();
+		Random rand = new Random();
+		int randomNumber = rand.nextInt(12) + 1;
+		String welcomeStringName = "welcome" + randomNumber; 
+		int resourceId = getResources().getIdentifier(welcomeStringName, "string", getPackageName());
+		String welcomeString = getResources().getString(resourceId);
+		welcomeText.setText(welcomeString);
 		next_theme = DataSet.themeIdArray[location];
 		String album_title = DataSet.themeTitleArray[location];
 		albumTitle.setText(album_title, TextView.BufferType.NORMAL);
 		imgRepresent.setImageResource(Utils.getResId(next_theme+"_represent", "drawable"));
 		trendsView.removeAllViews();
 		for(int i=0;i<DataSet.trendArray.length;i++){
-			trendsView.addView(createTrendItem(Utils.getResId(DataSet.trendArray[i]+"_trend", "drawable"),DataSet.trendArray[i]));
+			trendsView.addView(createTrendItem(Utils.getResId(DataSet.trendArray[i]+"_trend", "drawable"),DataSet.trendArray[i],i));
 		}
 		
 		albums.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +129,6 @@ public class MainActivity extends Activity {
 				
 			}
 		});
-		
 		
 	}
 	
@@ -178,22 +189,23 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	private View createTrendItem(int resId, final String tag){
-		LinearLayout layout = new LinearLayout(MainActivity.this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,230);
+	private View createTrendItem(int resId, final String tag, int miniAlbumLocation){
+		LinearLayout layout = new LinearLayout (MainActivity.this);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,LayoutParams.WRAP_CONTENT);
 		params.setMargins(0, 0, 10, 0);
-		layout.setPadding(5, 5, 5, 60);
+		layout.setPadding(5, 5, 5, 5);
 		layout.setBackgroundColor(Color.parseColor("#f6921e"));
+		layout.setOrientation(LinearLayout.VERTICAL);
 		layout.setLayoutParams(params);
 		
 		ImageView imageView = new ImageView(getApplicationContext());
-		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,170));
 		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		imageView.setImageResource(resId);
 		
 		imageView.setTag(tag);
 		
-		imageView.setOnClickListener(new View.OnClickListener() {
+		layout.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -202,7 +214,17 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		TextView textView = new TextView(getApplicationContext());
+		textView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,50));
+		textView.setTextSize(10);
+		textView.setTypeface(Typeface.DEFAULT_BOLD);
+		textView.setTextColor(Color.BLACK);
+		textView.setPadding(0, 10, 0, 5);
+		textView.setBackgroundColor(Color.parseColor("#f6921e"));
+		textView.setText(DataSet.themeTitleArray[miniAlbumLocation]);
+		
 		layout.addView(imageView);
+		layout.addView(textView);
 		
 		return layout;
 	}
