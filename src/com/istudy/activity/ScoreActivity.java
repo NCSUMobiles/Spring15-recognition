@@ -7,13 +7,13 @@ import com.istudy.dao.GamePlayDataSource;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
 
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ScoreActivity extends Activity {
@@ -27,6 +27,7 @@ public class ScoreActivity extends Activity {
 	private ImageView share_icon;
 	private ImageView urscore[] = new ImageView[6];
 	private ImageView hscore[] = new ImageView[6];
+	private TextView fact;
 	private GamePlayDataSource datasource;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,17 @@ public class ScoreActivity extends Activity {
 		replay = (ImageView) findViewById(R.id.replay);
 		home = (ImageView) findViewById(R.id.home);
 		versus = (ImageView) findViewById(R.id.vs);
+		fact = (TextView) findViewById(R.id.id_pedagog_desc);
 		
 		for(int i=0;i<6;i++){
 			urscore[i] = (ImageView) findViewById(Utils.getResId("us_"+i, "id"));
 			hscore[i] = (ImageView) findViewById(Utils.getResId("hs_"+i, "id"));
 		}
 		updatescore();
+ 
+		int factResourceId = getResources().getIdentifier(DataSet.themeIdArray[just_played] + "_str", "string", getPackageName());
+		String content = getResources().getString(factResourceId);
+		fact.setText(content);
 		
 		replay.setOnClickListener(new View.OnClickListener() {
 			
