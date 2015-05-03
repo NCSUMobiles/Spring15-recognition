@@ -1,15 +1,15 @@
 package com.istudy.activity;
 
 import java.util.Random;
-
 import com.example.istudy.R;
 import com.istudy.bean.Albums;
 import com.istudy.dao.GamePlayDataSource;
 import com.istudy.dataset.DataSet;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
-
 import android.os.Bundle;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -130,6 +130,9 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		ObjectAnimator animator=ObjectAnimator.ofInt(trendsView, "scrollX", 0, 1200, 0 );
+		animator.setDuration(10000);
+		animator.start();
 	}
 	
 	@Override
