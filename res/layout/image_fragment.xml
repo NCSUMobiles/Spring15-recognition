@@ -3,7 +3,6 @@
     android:id="@+id/gameManagerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/recognize_2015_bg"
     android:orientation="vertical"
     android:paddingBottom="@dimen/game_vertical_margin"
     android:paddingLeft="@dimen/game_horizontal_margin"

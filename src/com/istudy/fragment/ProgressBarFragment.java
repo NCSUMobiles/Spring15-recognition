@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 public class ProgressBarFragment extends Fragment {
 	private View[] progressTicks = new View[10];
 	private int timeleft;
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -29,14 +30,14 @@ public class ProgressBarFragment extends Fragment {
       progressTicks[7] = view.findViewById(R.id.ptick7);
       progressTicks[8] = view.findViewById(R.id.ptick8);
       progressTicks[9] = view.findViewById(R.id.ptick9);
-      
+            
       return view;
     }
 	
 	public void updateTimeLeft(){
 		timeleft--;
 		if(timeleft>=0){
-			progressTicks[timeleft].setBackgroundColor(Color.parseColor("#545D69"));
+			((ViewGroup) progressTicks[timeleft].getParent()).removeView(progressTicks[timeleft]);
 		}
 		
 	}

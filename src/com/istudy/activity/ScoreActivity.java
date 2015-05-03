@@ -2,9 +2,11 @@ package com.istudy.activity;
 
 import com.example.istudy.R;
 import com.istudy.bean.Albums;
+import com.istudy.dataset.DataSet;
 import com.istudy.dao.GamePlayDataSource;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
+
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,6 +24,7 @@ public class ScoreActivity extends Activity {
 	private ImageView replay;
 	private ImageView home;
 	private ImageView versus;
+	private ImageView share_icon;
 	private ImageView urscore[] = new ImageView[6];
 	private ImageView hscore[] = new ImageView[6];
 	private GamePlayDataSource datasource;
@@ -42,6 +45,7 @@ public class ScoreActivity extends Activity {
 		Log.d("ScoreActivity","score: "+total_score);
 		Log.d("ScoreActivity","location: "+just_played);
 		
+		share_icon = (ImageView) findViewById(R.id.share_icon);
 		replay = (ImageView) findViewById(R.id.replay);
 		home = (ImageView) findViewById(R.id.home);
 		versus = (ImageView) findViewById(R.id.vs);
@@ -80,14 +84,28 @@ public class ScoreActivity extends Activity {
 				Toast.makeText(ScoreActivity.this, "Challenge a friend", Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		share_icon.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String message = "I just scored " + total_score + "on the " + DataSet.themeTitleArray[just_played] + " album! Download the game at: https://github.com/chetanpawar0989/Recognize-App";
+				Intent share = new Intent(Intent.ACTION_SEND);
+				share.setType("text/plain");
+				share.putExtra(Intent.EXTRA_TEXT, message);
+
+				startActivity(Intent.createChooser(share, "Share Highscore"));
+			}
+			
+		});
 	}
 	
 	@Override
 	protected void onPause(){
 		datasource.close();
 		super.onPause();
-		setResult(RESULT_CANCELED);
-		finish();
+		//setResult(RESULT_CANCELED);
+		//finish();
 	}
 	
 	 @Override

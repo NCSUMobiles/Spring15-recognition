@@ -3,6 +3,7 @@ package com.istudy.activity;
 
 import com.example.istudy.R;
 import com.istudy.bean.GameImageBean;
+import com.istudy.fragment.CountdownFragment;
 import com.istudy.fragment.ImageFragment;
 import com.istudy.fragment.ProgressBarFragment;
 import com.istudy.helper.ActivityHelper;
@@ -47,6 +48,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	//Timer t = new Timer();
 	ProgressBarFragment pfag;
 	ImageFragment ifag;
+	CountdownFragment countdown;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +82,12 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	            // Create a new Fragment to be placed in the activity layout
 	            pfag = new ProgressBarFragment();
 	            ifag = ImageFragment.newInstance(bean);
+	            countdown = new CountdownFragment();
 	    		 
 	            // Add the fragment to the 'fragment_container' FrameLayout
 	            getSupportFragmentManager().beginTransaction()
 	                    .add(R.id.fragment1, pfag).commit();
+	            
 	            
 	            getSupportFragmentManager().beginTransaction()
 	            .add(R.id.fragment2, ifag).commit();
@@ -98,6 +102,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	protected void onResume(){
 		super.onResume();
 		gameManager(counter,false);
+		 getSupportFragmentManager().beginTransaction()
+         .add(R.id.fragment1, countdown).commit();
 	}
 	
 	public void initialize(){
@@ -128,6 +134,10 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 		pfag = new ProgressBarFragment();
 		getSupportFragmentManager().beginTransaction()
         .add(R.id.fragment1, pfag).commit();
+		
+		countdown = new CountdownFragment();
+		getSupportFragmentManager().beginTransaction()
+        .add(R.id.fragment1, countdown).commit();
 	}
 	
 	public void updateView(){
@@ -135,12 +145,14 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 		if(i_time_left <= 0){
 			Log.d("GameManagerActivity ","Time Left : "+i_time_left+" Runnable: "+runnable);
 			handler.removeCallbacks(runnable);
-			pfag.updateTimeLeft();					
+			pfag.updateTimeLeft();
+			countdown.updateTimeLeft();
 			timeout_false();
 		}else /*if(i_time_left%2 == 0)*/{
 			i_score -= i_score_diff;
 			Log.d("ImageFragment","Time Left: "+i_time_left);
 			pfag.updateTimeLeft();
+			countdown.updateTimeLeft();
 			ifag.updateView();			
 		}
 	}
