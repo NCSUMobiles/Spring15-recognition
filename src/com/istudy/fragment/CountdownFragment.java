@@ -20,7 +20,7 @@ public class CountdownFragment extends Fragment {
       Bundle savedInstanceState) {
       // Defines the xml file for the fragment
       View view = inflater.inflate(R.layout.countdown, container, false);
-      timeleft = 11;
+      timeleft = 10;
       tView = (TextView)view.findViewById(R.id.countdown);
 //      tView.setText("");
            
@@ -28,9 +28,8 @@ public class CountdownFragment extends Fragment {
     }
 	
 	public void updateTimeLeft(){
-		timeleft--;
 		
-		switch(timeleft-1){
+		switch(timeleft){
 		case 10: 
 			tView.setTextColor(Color.rgb(50,250,0));
 			break;
@@ -41,30 +40,33 @@ public class CountdownFragment extends Fragment {
 			tView.setTextColor(Color.rgb(150,250,0));
 			break;
 		case 7: 
-			tView.setTextColor(Color.rgb(200,200,0));
+			tView.setTextColor(Color.rgb(200,250,0));
 			break;
 		case 6: 
-			tView.setTextColor(Color.rgb(250,150,0));
+			tView.setTextColor(Color.rgb(255,255,0));
 			break;
 		case 5: 
-			tView.setTextColor(Color.rgb(250,100,0));
+			tView.setTextColor(Color.rgb(250,200,0));
 			break;
 		case 4: 
-			tView.setTextColor(Color.rgb(250,75,0));
+			tView.setTextColor(Color.rgb(250,150,0));
 			break;
 		case 3: 
-			tView.setTextColor(Color.rgb(250,50,0));
+			tView.setTextColor(Color.rgb(250,100,0));
 			break;
 		case 2:
-			tView.setTextColor(Color.rgb(250,25,0));
+			tView.setTextColor(Color.rgb(250,50,0));
 			break;
 		case 1:
 			tView.setTextColor(Color.rgb(250, 0, 0));
 		}
 		
-		if(timeleft < 11 && timeleft > 0){
-			tView.setText(" "+(timeleft-1) + " ");
+		if(timeleft>=0){
+			tView.setText(" "+(timeleft) + " ");
 		}	
+		
+		timeleft--;
+
 	}
 
 

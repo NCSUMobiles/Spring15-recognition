@@ -116,8 +116,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	
 	public void initialize(){
 		//t = new Timer();
-		i_time_left = 11;
-		i_score = 11;
+		i_time_left = 10;
+		i_score = 10;
 		option_clicked = false;
 		//counter++;
 	}
@@ -149,7 +149,6 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	}
 	
 	public void updateView(){
-		i_time_left -= 1;
 		if(i_time_left <= 0){
 			Log.d("GameManagerActivity ","Time Left : "+i_time_left+" Runnable: "+runnable);
 			handler.removeCallbacks(runnable);
@@ -168,6 +167,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 			}
 			ifag.updateView();			
 		}
+		i_time_left -= 1;
 	}
 	
 	public void startGame(){

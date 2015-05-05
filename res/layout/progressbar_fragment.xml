@@ -21,42 +21,42 @@
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#FA1900"/>
+        android:background="#FA3200"/>
     <View
         android:id="@+id/ptick2" 
         android:layout_width="0dp"
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#FA3200"/>
+        android:background="#FA6400"/>
     <View
         android:id="@+id/ptick3" 
         android:layout_width="0dp"
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#FA4B00"/>
+        android:background="#FA9600"/>
     <View
         android:id="@+id/ptick4"
         android:layout_width="0dp"
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#FA6400"/>
+        android:background="#FFC800"/>
     <View
         android:id="@+id/ptick5"
         android:layout_width="0dp"
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#FA9600"/>
+        android:background="#FFFF00"/>
     <View
         android:id="@+id/ptick6"
         android:layout_width="0dp"
         android:layout_height="match_parent" 
         android:layout_weight="1"
         android:layout_marginRight="@dimen/inter_progres_margin"
-        android:background="#C8C800"/>
+        android:background="#C8FA00"/>
     <View
         android:id="@+id/ptick7"
         android:layout_width="0dp"
