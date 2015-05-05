@@ -174,4 +174,9 @@ public class ImageFragment extends Fragment {
 
 	      return view;
 	    }
+	
+	public String getAlbumName(){
+		String name = this.correctOption.replace("_correct", "");
+		return name;
+	}
 }

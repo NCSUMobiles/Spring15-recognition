@@ -1,13 +1,16 @@
 package com.istudy.activity;
 
 import java.util.Random;
+
 import com.example.istudy.R;
 import com.example.istudy.SettingsActivity;
 import com.istudy.bean.Albums;
 import com.istudy.dao.GamePlayDataSource;
 import com.istudy.dataset.DataSet;
+import com.istudy.fragment.HelpOverlayFragment;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
+
 import android.os.Bundle;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -20,8 +23,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	private static final int GAME_REQUEST_CODE = 101;
 	private static final int ALBUM_REQUEST_CODE = 102;
@@ -43,11 +49,13 @@ public class MainActivity extends Activity {
 	private ImageView imgRepresent;
 	private TextView albumTitle;
 	private LinearLayout trendsView;
-	private ImageView albums;
+	private ImageView help;
 	private ImageView play_game;
 	private TextView welcomeText;
 	SharedPreferences prefs;
 	Editor editor;
+	private HelpOverlayFragment hFrag;
+	private boolean helpVisible = true;
 	
 	private GamePlayDataSource datasource;
 	@Override
@@ -57,7 +65,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		ImageView settings = (ImageView) findViewById(R.id.settings_view);
-		albums = (ImageView) findViewById(R.id.albums_view);
+		help = (ImageView) findViewById(R.id.help_view);
 		play_game = (ImageView) findViewById(R.id.play_game);
 		imgRepresent = (ImageView) findViewById(R.id.img_represent);
 		albumTitle = (TextView) findViewById(R.id.album_title);
@@ -82,7 +90,7 @@ public class MainActivity extends Activity {
 		Utils.masterList = Utils.createMasterList();
 		Utils.createAlbumRandomSet(datasource.getAvailableThemes());
 		
-		
+		toggleHelpOverlay();
 		
 		//next_theme = DataSet.themeIdArray[theme_no];
 		location = Utils.getNextAlbum(); // Corresponding to theme
@@ -125,15 +133,12 @@ public class MainActivity extends Activity {
 			trendsView.addView(createTrendItem(Utils.getResId(DataSet.trendArray[i]+"_trend", "drawable"),DataSet.trendArray[i],i));
 		}
 		
-		
-		albums.setOnClickListener(new View.OnClickListener() {
+
+		help.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				//Toast.makeText(MainActivity.this, "Open Albums to select next Album", Toast.LENGTH_SHORT).show();
-				Intent intent = new Intent(MainActivity.this, AlbumsActivity.class);
-				intent.putExtra("location", location);
-				startActivityForResult(intent, ALBUM_REQUEST_CODE);
+				toggleHelpOverlay();
 			}
 		});
 		
@@ -153,6 +158,20 @@ public class MainActivity extends Activity {
 		ObjectAnimator animator=ObjectAnimator.ofInt(trendsView, "scrollX", 0, 400,0);
 		animator.setDuration(1500);
 		animator.start();
+	}
+	
+	public void toggleHelpOverlay(){
+		if(hFrag == null){
+			hFrag = new HelpOverlayFragment();
+		}
+		if(helpVisible){
+			getSupportFragmentManager().beginTransaction().remove(hFrag).commit();
+			helpVisible = false;
+		}
+		else{
+			getSupportFragmentManager().beginTransaction().add(R.id.main_frame, hFrag).commit();
+			helpVisible = true;
+		}
 	}
 	
 	@Override

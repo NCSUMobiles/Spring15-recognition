@@ -3,6 +3,7 @@ package com.istudy.activity;
 
 import com.example.istudy.R;
 import com.istudy.bean.GameImageBean;
+import com.istudy.dataset.DataSet;
 import com.istudy.fragment.CountdownFragment;
 import com.istudy.fragment.ImageFragment;
 import com.istudy.fragment.ProgressBarFragment;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class GameManagerActivity extends FragmentActivity implements ImageFragment.OnItemClickListener{
 
@@ -91,6 +93,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	            getSupportFragmentManager().beginTransaction()
 	                    .add(R.id.fragment1, pfag).commit();
 	            
+	            getSupportFragmentManager().beginTransaction()
+	            .add(R.id.fragment1, countdown).commit();
 	            
 	            getSupportFragmentManager().beginTransaction()
 	            .add(R.id.fragment2, ifag).commit();
@@ -105,8 +109,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	protected void onResume(){
 		super.onResume();
 		gameManager(counter,false);
-		 getSupportFragmentManager().beginTransaction()
-         .add(R.id.fragment1, countdown).commit();
+
 	}
 	
 	public void initialize(){
@@ -214,6 +217,14 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	
 	private void timeout_false(){
 		ifag.getCorrectView().setBackgroundResource(R.drawable.option_correct);
+		String aName = ifag.getAlbumName();
+		TextView tView = (TextView)findViewById(R.id.pictureFact);
+		int factResourceId = getResources().getIdentifier(aName + "_fact", "string", getPackageName());
+		if(factResourceId != 0){
+			String content = getResources().getString(factResourceId);
+			tView.setText("\""+content+"\"");
+		}
+		
 		delayHandler.postDelayed(new Runnable() {
 			
 			@Override
@@ -226,7 +237,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 				setResult(RESULT_INCOMPLETE, data);
 				finish();
 			}
-		}, 1500);
+		}, 3500);//time delay after an answer choice is selected
 	}
 	
 	@Override
