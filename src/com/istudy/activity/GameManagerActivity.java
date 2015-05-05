@@ -12,7 +12,9 @@ import com.istudy.helper.Utils;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -36,7 +38,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	private LinearLayout parentLayout;
 	private ImageView rightOrWrong;
 	private ImageView iv;
-		
+	SharedPreferences prefs;
 	
 
 	
@@ -61,7 +63,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 		step = intent.getIntExtra("step", 0);
 		i_total_score = intent.getIntExtra("total_score", 0);
 		max = Utils.masterList.get(location).size();				
-		
+		prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+
 		if(step>=max){
 			Log.d("GameManagerActivity", "step: "+step+" max: "+max);
 			result_ok();
@@ -108,8 +111,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	
 	public void initialize(){
 		//t = new Timer();
-		i_time_left = 10;
-		i_score = 10;
+		i_time_left = 11;
+		i_score = 11;
 		option_clicked = false;
 		//counter++;
 	}
@@ -188,13 +191,20 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 						i_total_score += i_score;
 						v.setBackgroundColor(Color.parseColor("#28ce00"));
 						iv.setImageResource (R.drawable.check);
+						//check if sounds is on/off 
+						if(prefs.getBoolean("sounds", true))
+						{
 						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
 						mp.start();
+						}
 					}else{
 						v.setBackgroundResource(R.drawable.option_wrong);
 						iv.setImageResource (R.drawable.wrong);
+						if(prefs.getBoolean("sounds", true))
+						{
 						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
 						mp.start();
+						}
 					}
 					timeout_false();
 				}

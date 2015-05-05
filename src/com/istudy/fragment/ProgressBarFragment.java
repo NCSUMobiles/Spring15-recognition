@@ -19,7 +19,7 @@ public class ProgressBarFragment extends Fragment {
       Bundle savedInstanceState) {
       // Defines the xml file for the fragment
       View view = inflater.inflate(R.layout.progressbar_fragment, container, false);
-      timeleft = 10;
+      timeleft = 11;
       progressTicks[0] = view.findViewById(R.id.ptick0);
       progressTicks[1] = view.findViewById(R.id.ptick1);
       progressTicks[2] = view.findViewById(R.id.ptick2);
@@ -36,7 +36,7 @@ public class ProgressBarFragment extends Fragment {
 	
 	public void updateTimeLeft(){
 		timeleft--;
-		if(timeleft>=0){
+		if(timeleft>=0 && timeleft<10){
 			((ViewGroup) progressTicks[timeleft].getParent()).removeView(progressTicks[timeleft]);
 		}
 		

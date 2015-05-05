@@ -2,6 +2,7 @@ package com.istudy.activity;
 
 import java.util.Random;
 import com.example.istudy.R;
+import com.example.istudy.SettingsActivity;
 import com.istudy.bean.Albums;
 import com.istudy.dao.GamePlayDataSource;
 import com.istudy.dataset.DataSet;
@@ -12,8 +13,11 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -42,6 +46,8 @@ public class MainActivity extends Activity {
 	private ImageView albums;
 	private ImageView play_game;
 	private TextView welcomeText;
+	SharedPreferences prefs;
+	Editor editor;
 	
 	private GamePlayDataSource datasource;
 	@Override
@@ -58,7 +64,16 @@ public class MainActivity extends Activity {
 		trendsView = (LinearLayout) findViewById(R.id.trends_view);
 		welcomeText = (TextView) findViewById(R.id.welcome_text);
 		
+		prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+	    editor = prefs.edit();
+	    
+	    if(!prefs.contains("difficulty"))
+		editor.putInt("difficulty", 3);
+	    if(!prefs.contains("sounds"))
+		editor.putBoolean("sounds", true);
 		
+		editor.commit();
+	
 		datasource = new GamePlayDataSource(this);
 	    datasource.open();
 		
@@ -80,7 +95,11 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {				
-				Toast.makeText(MainActivity.this, "Open Options Menu", Toast.LENGTH_SHORT).show();				
+//				Toast.makeText(MainActivity.this, "Open Options Menu", Toast.LENGTH_SHORT).show();	
+				Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//				startActivityForResult(intent, ALBUM_REQUEST_CODE);
+				startActivity(intent);
+				
 			}
 		});
 							
@@ -106,6 +125,7 @@ public class MainActivity extends Activity {
 			trendsView.addView(createTrendItem(Utils.getResId(DataSet.trendArray[i]+"_trend", "drawable"),DataSet.trendArray[i],i));
 		}
 		
+		
 		albums.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -130,8 +150,8 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		ObjectAnimator animator=ObjectAnimator.ofInt(trendsView, "scrollX", 0, 1200, 0 );
-		animator.setDuration(10000);
+		ObjectAnimator animator=ObjectAnimator.ofInt(trendsView, "scrollX", 0, 400,0);
+		animator.setDuration(1500);
 		animator.start();
 	}
 	

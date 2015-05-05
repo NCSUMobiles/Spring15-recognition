@@ -28,8 +28,7 @@
     <string name="transit_highscore">HIGH SCORE</string>
     <string name="view_leaderboard">VIEW LEADERBOARD</string>
     <string name="pedagog_title">Did you know?</string>
-    <string name="pedagog_desc">Ibusdae Quibus Dolenet Ommolorese.Doluptatium Eumenih Illenim Usapica TemperoEatur, To Miliquam Que Comnis Explit Verruptatem. Nequia Cuptatusciis Suntio. Hitium Que Doluptae Et Lam, Voluptibus Ideris Dis Essumquias Duntiae Rspiet Re Lam Fugitature</string>    
-
+    <string name="pedagog_desc">Ibusdae Quibus Dolenet Ommolorese.Doluptatium Eumenih Illenim Usapica TemperoEatur, To Miliquam Que Comnis Explit Verruptatem. Nequia Cuptatusciis Suntio. Hitium Que Doluptae Et Lam, Voluptibus Ideris Dis Essumquias Duntiae Rspiet Re Lam Fugitature</string>
     <string name="welcome1">Hey there, how are you? I\'m good, thanks for not asking.</string>
     <string name="welcome2">Hola!</string>
     <string name="welcome3">What are you waiting for?! Press Start!</string>
@@ -54,4 +53,6 @@
     <string name="animal_patterns_str">Animals mimic both their environment and more dangerous species in order to survive in preadatorial climates.</string>
     <string name="cartoons_str">South Park creators Trey Parker and Matt Stone created the musical The Book of Morman, which has acquired nine Tony Awards since it\'s inception in 2011.</string>
     <string name="celeb_yearbook_str">Actress Zooey Deschanel\'s name was taken from novelist J.D. Salinger\'s notable male character of &quot;Franny and Zooey&quot;.</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
 </resources>
