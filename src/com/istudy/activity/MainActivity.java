@@ -11,6 +11,7 @@ import com.istudy.fragment.HelpOverlayFragment;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -145,7 +146,14 @@ public class MainActivity extends FragmentActivity {
 		play_game.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {			
+			public void onClick(View v) {
+				prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+				
+				if(prefs.getBoolean("sounds", true))
+				{
+					final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.goodluck);
+					mp.start();
+				}
 				Intent intent = new Intent(MainActivity.this, GameManagerActivity.class);
 				Log.d("MainActivity","location: "+location);
 				intent.putExtra("location", location);
@@ -283,6 +291,13 @@ public class MainActivity extends FragmentActivity {
 		alertDialogBuilder.setPositiveButton(R.string.play, new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int id) {
+				prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+				
+				if(prefs.getBoolean("sounds", true))
+				{
+					final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.goodluck);
+					mp.start();
+				}
 				Intent intent = new Intent(MainActivity.this, GameManagerActivity.class);
 				intent.putExtra("location", location);
 				intent.putExtra("step", 0);

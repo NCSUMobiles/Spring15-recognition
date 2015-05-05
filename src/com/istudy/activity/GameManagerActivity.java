@@ -41,6 +41,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	private ImageView rightOrWrong;
 	private ImageView iv;
 	SharedPreferences prefs;
+	MediaPlayer mp;
 	
 
 	
@@ -66,6 +67,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 		i_total_score = intent.getIntExtra("total_score", 0);
 		max = Utils.masterList.get(location).size();				
 		prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+	
 
 		if(step>=max){
 			Log.d("GameManagerActivity", "step: "+step+" max: "+max);
@@ -161,7 +163,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 			countdown.updateTimeLeft();
 			if(prefs.getBoolean("sounds", true))
 			{
-				final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.tick);
+				mp = MediaPlayer.create(getApplicationContext(), R.raw.tick);
 				mp.start();
 			}
 			ifag.updateView();			
@@ -202,8 +204,8 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 						//check if sounds are on/off 
 						if(prefs.getBoolean("sounds", true))
 						{
-							final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
-							mp.start();
+							mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+							mp.start();							
 						}
 					}else{
 						v.setBackgroundResource(R.drawable.option_wrong);
@@ -211,7 +213,7 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 						//check if sounds are on/off
 						if(prefs.getBoolean("sounds", true))
 						{
-							final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+							mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
 							mp.start();
 						}
 					}
@@ -254,7 +256,9 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 	
 	@Override
 	protected void onDestroy(){
-		super.onDestroy();		
+		super.onDestroy();
+		if (mp != null)
+			mp.release();
 	}
 	
 	private void result_ok() {

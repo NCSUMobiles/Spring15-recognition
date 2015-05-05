@@ -14,7 +14,21 @@
     	android:paddingLeft="@dimen/activity_horizontal_margin"
     	android:paddingRight="@dimen/activity_horizontal_margin"
     	android:paddingTop="@dimen/activity_vertical_margin">
-        <TextView        
+    	<LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">            
+            <ImageView
+                android:id="@+id/albumComplete" 
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:src="@drawable/woo_wee1" 
+                android:contentDescription="@string/desc"
+                android:adjustViewBounds="true"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <TextView
+        android:id="@+id/scoreTitle"        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
@@ -147,54 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:orientation="vertical">
-			<LinearLayout 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@drawable/score_up_layout"
-			    android:layout_marginLeft="-5dp"
-			    android:layout_marginRight="-5dp"
-			    android:layout_marginTop="-5dp"
-			    android:weightSum="2">
-
-			    <ImageView
-			        android:id="@+id/share_icon"
-			        android:layout_width="30dp"
-			        android:layout_height="30dp"
-			        android:layout_gravity="center"
-			        android:layout_weight="1"
-			        android:contentDescription="@string/desc"
-			        android:src="@drawable/share" />
-
-			    <ImageView 
-			    	android:layout_width="30dp"
-			    	android:layout_height="30dp"
-			    	android:src="@drawable/icon_global"
-			    	android:layout_gravity="center"
-			    	android:contentDescription="@string/desc"
-			    	android:layout_weight="1"/>
-			</LinearLayout>
 			
-			<LinearLayout 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@drawable/score_down_layout"
-			    android:orientation="vertical">
-			    <TextView 
-			    	android:layout_width="match_parent"
-			    	android:layout_height="wrap_content"			    	
-			    	android:layout_gravity="center"			    	
-			    	android:textSize="16sp" 
-			    	android:textColor="#FFFFFF"
-			    	android:paddingLeft="60dp"
-			    	android:text="@string/view_leaderboard"/>
-
-			    <ImageView 
-			    	android:layout_width="10dp"
-			    	android:layout_height="10dp"
-			    	android:src="@drawable/icon_down"
-			    	android:layout_gravity="center"
-			    	android:contentDescription="@string/desc"/>
-			</LinearLayout>
 			<LinearLayout 
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
@@ -229,11 +196,11 @@
                 android:src="@drawable/icon_replay" 
                 android:contentDescription="@string/desc"/>
             <ImageView
-                android:id="@+id/vs" 
+                android:id="@+id/share1" 
                 android:layout_width="0dp"
                 android:layout_height="70dp"                
                 android:layout_weight="1"
-                android:src="@drawable/icon_vs"
+                android:src="@drawable/share1"
                 android:contentDescription="@string/desc"/>
             <ImageView 
                 android:id="@+id/home"
@@ -243,6 +210,7 @@
                 android:src="@drawable/icon_home"
                 android:contentDescription="@string/desc"/>
         </LinearLayout>
+        
     </LinearLayout>
     
 

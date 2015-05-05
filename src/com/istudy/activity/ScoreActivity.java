@@ -23,6 +23,7 @@ public class ScoreActivity extends Activity {
 
 	private static final int RESULT_COMPLETED = 2;
 	private int total_score = 0;
+	private int high_score = 0;
 	private int just_played = -1;
 	private ImageView replay;
 	private ImageView home;
@@ -30,6 +31,7 @@ public class ScoreActivity extends Activity {
 	private ImageView share_icon;
 	private ImageView urscore[] = new ImageView[6];
 	private ImageView hscore[] = new ImageView[6];
+	private ImageView albumComplete;
 	private TextView fact;
 	private GamePlayDataSource datasource;
 	SharedPreferences prefs;
@@ -42,19 +44,32 @@ public class ScoreActivity extends Activity {
 		prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 		
 		datasource = new GamePlayDataSource(this);
-	    datasource.open();
-		
+	    datasource.open();		
 		
 		just_played = intent.getIntExtra("just_location", -1);
 		total_score = intent.getIntExtra("total_score", 0);
+		high_score = getHighScore();
+		albumComplete = (ImageView) findViewById(R.id.albumComplete);
+		TextView scoreTitle = (TextView) findViewById(R.id.scoreTitle);
+		
+		
+		if (total_score == 0)
+			albumComplete.setImageResource(R.drawable.keep_trying);
+		else if (total_score == high_score)
+		{
+			albumComplete.setImageResource(R.drawable.high_score_logo);
+			scoreTitle.setText("YOU SCORED HIGHEST");
+		}			
+		else
+			albumComplete.setImageResource(R.drawable.woohoo2);
 		
 		Log.d("ScoreActivity","score: "+total_score);
 		Log.d("ScoreActivity","location: "+just_played);
 		
-		share_icon = (ImageView) findViewById(R.id.share_icon);
+		share_icon = (ImageView) findViewById(R.id.share1);
 		replay = (ImageView) findViewById(R.id.replay);
 		home = (ImageView) findViewById(R.id.home);
-		versus = (ImageView) findViewById(R.id.vs);
+		//versus = (ImageView) findViewById(R.id.vs);
 		fact = (TextView) findViewById(R.id.id_pedagog_desc);
 		
 		for(int i=0;i<6;i++){
@@ -93,6 +108,7 @@ public class ScoreActivity extends Activity {
 			}
 		});
 		
+		/*
 		versus.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -101,6 +117,7 @@ public class ScoreActivity extends Activity {
 				Toast.makeText(ScoreActivity.this, "Challenge a friend", Toast.LENGTH_SHORT).show();
 			}
 		});
+		*/
 		
 		share_icon.setOnClickListener(new View.OnClickListener() {
 			
@@ -134,7 +151,7 @@ public class ScoreActivity extends Activity {
 	
 	private void updatescore(){
 		int us[] = prepare(total_score);
-		int hs[] = prepare(getHighScore());
+		int hs[] = prepare(high_score);
 		for(int i=0;i<6;i++){
 			urscore[i].setImageResource(Utils.getResId("big"+us[i], "drawable"));
 			hscore[i].setImageResource(Utils.getResId("small"+hs[i], "drawable"));
