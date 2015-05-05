@@ -57,14 +57,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp" >
+        android:background="#89c33f"
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="3dp" >
 
         <ImageView
             android:id="@+id/img_represent"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:contentDescription="@string/theme_display_image"
-            android:padding="5dp"
+            android:padding="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/mustaches_represent" />
 
@@ -92,13 +97,14 @@
             android:padding="5dp"
             android:text="@string/Test"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#89c33f" />
     </RelativeLayout>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
          >
 
         <LinearLayout
@@ -208,7 +214,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:weightSum="2" >
 
         <ImageView
@@ -224,7 +230,7 @@
             android:id="@+id/help_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/help"
+            android:background="@drawable/recognize_help"
             android:contentDescription="help"
             android:scaleType="fitXY" />
     </RelativeLayout>

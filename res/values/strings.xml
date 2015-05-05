@@ -53,14 +53,14 @@
     <string name="cartoons_str">South Park creators Trey Parker and Matt Stone created the musical The Book of Morman, which has acquired nine Tony Awards since it\'s inception in 2011.</string>
     <string name="celeb_yearbook_str">Actress Zooey Deschanel\'s name was taken from novelist J.D. Salinger\'s notable male character of &quot;Franny and Zooey&quot;.</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="batman_fact">He has no parents</string>
+    <string name="batman_fact">He is really Bruce Wayne</string>
     <string name="captain_fact">He\'s really old</string>
     <string name="flash_fact">He\'s really fast</string>
     <string name="gambit_fact">He throws cards</string>
-    <string name="hulk_fact">he is strong</string>
-    <string name="ironman_fact">he is rich too</string>
+    <string name="hulk_fact">He is strong</string>
+    <string name="ironman_fact">He is rich</string>
     <string name="spiderman_fact">He swings</string>
-    <string name="storm_fact">lightning is scary</string>
+    <string name="storm_fact">Lightning is scary</string>
     <string name="superman_fact">He is an alien</string>
     <string name="wonder_fact">Princess of themyscira</string>
 </resources>

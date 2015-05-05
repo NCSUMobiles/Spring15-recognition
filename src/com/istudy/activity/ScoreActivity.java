@@ -7,9 +7,12 @@ import com.istudy.dao.GamePlayDataSource;
 import com.istudy.helper.ActivityHelper;
 import com.istudy.helper.Utils;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,12 +32,14 @@ public class ScoreActivity extends Activity {
 	private ImageView hscore[] = new ImageView[6];
 	private TextView fact;
 	private GamePlayDataSource datasource;
+	SharedPreferences prefs;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActivityHelper.initialize(ScoreActivity.this);
 		setContentView(R.layout.activity_transition_score);		
-		Intent intent = getIntent();			
+		Intent intent = getIntent();		
+		prefs = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 		
 		datasource = new GamePlayDataSource(this);
 	    datasource.open();
@@ -57,10 +62,16 @@ public class ScoreActivity extends Activity {
 			hscore[i] = (ImageView) findViewById(Utils.getResId("hs_"+i, "id"));
 		}
 		updatescore();
- 
+		
 		int factResourceId = getResources().getIdentifier(DataSet.themeIdArray[just_played] + "_str", "string", getPackageName());
 		String content = getResources().getString(factResourceId);
 		fact.setText(content);
+		
+		if(prefs.getBoolean("sounds", true))
+		{
+			final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.ooweee);
+			mp.start();
+		}
 		
 		replay.setOnClickListener(new View.OnClickListener() {
 			

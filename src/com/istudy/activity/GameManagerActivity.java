@@ -159,6 +159,11 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 			Log.d("ImageFragment","Time Left: "+i_time_left);
 			pfag.updateTimeLeft();
 			countdown.updateTimeLeft();
+			if(prefs.getBoolean("sounds", true))
+			{
+				final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.tick);
+				mp.start();
+			}
 			ifag.updateView();			
 		}
 	}
@@ -194,19 +199,20 @@ public class GameManagerActivity extends FragmentActivity implements ImageFragme
 						i_total_score += i_score;
 						v.setBackgroundColor(Color.parseColor("#28ce00"));
 						iv.setImageResource (R.drawable.check);
-						//check if sounds is on/off 
+						//check if sounds are on/off 
 						if(prefs.getBoolean("sounds", true))
 						{
-						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
-						mp.start();
+							final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+							mp.start();
 						}
 					}else{
 						v.setBackgroundResource(R.drawable.option_wrong);
 						iv.setImageResource (R.drawable.wrong);
+						//check if sounds are on/off
 						if(prefs.getBoolean("sounds", true))
 						{
-						final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
-						mp.start();
+							final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+							mp.start();
 						}
 					}
 					timeout_false();
