@@ -29,4 +29,4 @@ Once user opens this game application, he can play this enjoying game with diffe
 https://github.com/chetanpawar0989/Recognize-App/tree/score_screen
 
 ### Link to screencast video:
-http://youtu.be/kM9TsPP2Gfc
+https://youtu.be/kM9TsPP2Gfc
